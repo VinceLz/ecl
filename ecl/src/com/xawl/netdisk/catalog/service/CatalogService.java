@@ -61,4 +61,11 @@ public class CatalogService {
 			throw new RuntimeException(e);
 		}
 	}
+	public void createRootCatalig(Catalog c){
+		try {
+			cDao.createRootCatalog(c);
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+	}
 }

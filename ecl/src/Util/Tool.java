@@ -2,6 +2,8 @@ package Util;
 
 import java.io.InputStream;
 import java.security.MessageDigest;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
@@ -62,5 +64,8 @@ public class Tool {
 	public static void deleteFileList(List<File> myfile){
 		
 	}
-	
+	public static String getCurrentTime(){
+		SimpleDateFormat dateFormat=new SimpleDateFormat("yyyy-mm-dd");
+		return dateFormat.format(new Date()).toString();
+	}
 }

@@ -83,6 +83,14 @@ public class CatalogDao {
 		qr.update(sql, para);
 
 	}
+	//create root
+	public void createRootCatalog(Catalog c) throws SQLException {
+		String sql = "insert into catalog (cName,cDate,cF) values(?,?,?)";
+		Object[] para = {c.getcName(),
+				c.getcDate(), c.getCf() };
+		qr.update(sql, para);
+
+	}
 
 	// 通过cid 找到cf值
 	public String cidTocf(String cid) throws SQLException {

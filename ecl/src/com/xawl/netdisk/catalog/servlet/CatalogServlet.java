@@ -67,5 +67,6 @@ public class CatalogServlet extends BaseServlet {
 		return "r:/CatalogServlet?method=myCatalog&cid=" + pid;
 
 	}
+	
 
 }

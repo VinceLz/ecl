@@ -10,9 +10,18 @@ public class Catalog {
 	private String cName; // 对应
 	private String cDate; // 对应
 	private Catalog parent;
+	private String cf;
 	private String isShare; // 对应
 	private List<Catalog> children;
 	private List<File> myFile;
+
+	public String getCf() {
+		return cf;
+	}
+
+	public void setCf(String cf) {
+		this.cf = cf;
+	}
 
 	@Override
 	public String toString() {
