@@ -17,6 +17,8 @@ import com.xawl.netdisk.catalog.service.CatalogService;
 public class CatalogServlet extends BaseServlet {
 	private CatalogService service = new CatalogService();
 
+	
+	
 	public String myCatalog(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 
