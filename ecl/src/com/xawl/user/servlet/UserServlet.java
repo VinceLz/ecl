@@ -91,12 +91,18 @@ public class UserServlet extends BaseServlet {
 			
 			request.getSession().invalidate();
 			request.getSession().setAttribute("user", user);
-			return "r:/CatalogServlet?method=myCatalog";
+			return "r:/CatalogServlet?method=myCatalogRoot";
 		} catch (com.xawl.user.service.UserException e) {
 			request.setAttribute("msg", e.getMessage());
 			request.setAttribute("form", form);
 			return "f:/background/login.jsp";
 		}
 	}
+	//退出功能
+	public String quit(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 
+		request.getSession().invalidate();
+		return "r:/background/login.jsp";
+	}
 }

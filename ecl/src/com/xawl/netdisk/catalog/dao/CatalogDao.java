@@ -25,7 +25,14 @@ public class CatalogDao {
 	private QueryRunner qr = new TxQueryRunner();
 	private FileDao fileDao = new FileDao();
 
-	
+	public void close(){
+		try {
+			qr.getDataSource().getConnection().close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	
 	// 给我一个cid，就可以查找下面一级的目录和文件
 	public Catalog findByCidToCatalog(String cid) throws SQLException {
@@ -81,7 +88,7 @@ public class CatalogDao {
 		Object[] para = { c.getcId(), c.getParent().getcId(), c.getcName(),
 				c.getcDate(), c.getIsShare() };
 		qr.update(sql, para);
-
+		return;
 	}
 	//create root
 	public void createRootCatalog(Catalog c) throws SQLException {
@@ -89,7 +96,7 @@ public class CatalogDao {
 		Object[] para = {c.getcId(),c.getcName(),
 				c.getcDate(), c.getCf() };
 		qr.update(sql, para);
-
+		return;
 	}
 
 	// 通过cid 找到cf值
@@ -103,6 +110,7 @@ public class CatalogDao {
 	public void intoCf(String cid, String cf) throws SQLException {
 		String sql = "update catalog set cF=? where cId=?";
 		qr.update(sql, cf, cid);
+		return;
 	}
 
 	/*
@@ -133,7 +141,7 @@ public class CatalogDao {
 		for (Catalog c : chileList) {
 			deleteByCatalog(c.getcId(), context);
 		}
-
+		
 		return;
 	}
 

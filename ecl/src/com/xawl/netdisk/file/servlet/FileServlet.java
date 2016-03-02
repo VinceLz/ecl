@@ -24,26 +24,22 @@ public class FileServlet extends BaseServlet {
 
 		File f = fileService.findByFid(fid);
 		String filePath = f.getfPath();
-		if (("").equals(f.getfHash()) || f.getfHash().isEmpty()) {
-			// 说明他是被封人家的 只删除数据库的信息
-			fileService.deleteByFid(fid);
-			response.getWriter().write("true");
-			return null;
-		} else {
-			File f1 = fileService.findByPath(filePath);
+		try {
 
-			try {
-				java.io.File abf = new java.io.File(this.getServletContext()
-						.getRealPath(filePath));
-				fileService.deleteByFid(fid);
-				abf.delete();
-			} catch (Exception e) {
+			Boolean b = fileService.deleteByFid(fid);
+			if (!b) {
 				response.getWriter().write("false");
 				return null;
 			}
-			response.getWriter().write("true");
+			java.io.File abf = new java.io.File(this.getServletContext()
+					.getRealPath(filePath));
+			fileService.deleteByFid(fid);
+			abf.delete();
+		} catch (Exception e) {
+			response.getWriter().write("false");
 			return null;
 		}
+		response.getWriter().write("true");
+		return null;
 	}
-
 }

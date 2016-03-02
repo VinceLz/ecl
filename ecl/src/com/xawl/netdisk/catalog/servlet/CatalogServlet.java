@@ -20,11 +20,20 @@ public class CatalogServlet extends BaseServlet {
 
 	
 	
-	public String myCatalog(HttpServletRequest request,
+	public String myCatalogRoot(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		//先从session拿到user 然后获取对应的文件地址
 		User user=(User) request.getSession().getAttribute("user");
 		String cid = user.getcId();
+		Catalog c = service.findByCidToCatalog(cid);
+		request.setAttribute("catalog", c);
+		return "f:/home.jsp";
+	}
+	public String myCatalog(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		//先从session拿到user 然后获取对应的文件地址
+			
+		String cid = request.getParameter("cid");
 		Catalog c = service.findByCidToCatalog(cid);
 		request.setAttribute("catalog", c);
 		return "f:/home.jsp";
