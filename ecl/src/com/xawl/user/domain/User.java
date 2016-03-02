@@ -53,6 +53,12 @@ public class User {
 	public void setFileSize(long fileSize) {
 		this.fileSize = fileSize;
 	}
+	@Override
+	public String toString() {
+		return "User [uId=" + uId + ", userName=" + userName + ", uPassword="
+				+ uPassword + ", cId=" + cId + ", uTime=" + uTime + ", role="
+				+ role + ", fileSize=" + fileSize + "]";
+	}
 	
 	
 }

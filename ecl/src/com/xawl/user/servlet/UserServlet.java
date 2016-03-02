@@ -3,10 +3,9 @@ package com.xawl.user.servlet;
 
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -41,27 +40,63 @@ public class UserServlet extends BaseServlet {
 			request.setAttribute("form", form);
 			return "f:/background/regist.jsp";
 		}
+		
 			
-		//后台验证完毕 开发封装其他信息
-		String cid=Tool.randomId();
-		form.setcId(cid);
-		//还需要马上创建目录 
-		Catalog catalog1=new Catalog();
-		catalog1.setcName(form.getUserName());
-		catalog1.setcDate(Tool.getCurrentTime());
-		catalog1.setCf(Tool.randomId());
-		catalogService.createRootCatalig(catalog1);
-		form.setuTime(Tool.getCurrentTime());
-		form.setRole(0);  //0是普通用户 1是超级管理员
+	//	是普通用户 1是超级管理员
 		try {
+			String cid=Tool.randomId();
+			form.setcId(cid);
+			form.setuTime(Tool.getCurrentTime());
+			form.setRole(0); 
 			userService.regist(form);
-		} catch (Exception e) {
+			//后台验证完毕 开发封装其他信息
+			
+			//还需要马上创建目录 
+			Catalog catalog1=new Catalog();
+			catalog1.setcId(cid);
+			catalog1.setcName(form.getUserName());
+			catalog1.setcDate(Tool.getCurrentTime());
+			catalog1.setCf(Tool.randomId());
+			catalogService.createRootCatalig(catalog1);
+		 //0
+		} catch (com.xawl.user.service.UserException e) {
 			request.setAttribute("msg", e.getMessage());
 			request.setAttribute("form", form);
 			return "f:/background/regist.jsp";
 		}
 
 		return "f:/background/signsucces.jsp";
+	}
+
+	
+	//登录
+	public String login(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		User form = CommonUtils.toBean(request.getParameterMap(), User.class);
+		System.out.println(form.toString());
+		if (form.getUserName() == null || form.getUserName().trim().isEmpty()
+				|| form.getUserName().contains(" ")) {
+			request.setAttribute("msg", "用户名不能为空，或者包含空格");
+			request.setAttribute("form", form);
+			return "f:/background/login.jsp";
+		}
+		if (form.getuPassword() == null || form.getuPassword().trim().isEmpty()
+				|| form.getuPassword().contains(" ")) {
+			request.setAttribute("msg", "密码不能为空，或者包含空格");
+			request.setAttribute("form", form);
+			return "f:/background/login.jsp";
+		}
+		try {
+			User user = userService.login(form);
+			
+			request.getSession().invalidate();
+			request.getSession().setAttribute("user", user);
+			return "r:/CatalogServlet?method=myCatalog";
+		} catch (com.xawl.user.service.UserException e) {
+			request.setAttribute("msg", e.getMessage());
+			request.setAttribute("form", form);
+			return "f:/background/login.jsp";
+		}
 	}
 
 }

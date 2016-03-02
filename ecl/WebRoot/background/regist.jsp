@@ -112,7 +112,7 @@
       </nav>
     </div>
     
-  
+  <div>${msg }</div>
   
 </div>
 <div class="middle sign_middle clearfix">

@@ -16,7 +16,19 @@ public class UserService {
 		if (user != null) {
 			throw new UserException("用户名已被注册");
 		}
-		userDao.addUser(form);
+		else {
+			userDao.addUser(form);
+		}
 	}
-
+	public User login(User form) throws UserException {
+		User user = userDao.findByUsername(form.getUserName());
+		if (user == null) {
+			throw new UserException("用户不存在");
+		}
+		if (!user.getuPassword().equals(form.getuPassword())) {
+			throw new UserException("密码不正确");
+		}
+		return user;
+	}
+	
 }

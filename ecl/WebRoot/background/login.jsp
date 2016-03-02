@@ -53,8 +53,9 @@
 			<h2>ECL实验室后台管理系统</h2>
 		</div>
 		<!-- End #logn-top -->
+		<p>${msg }</p>
 		<div id="login-content">
-			<form action="${pageContext.request.contextPath}/user?action=login"
+			<form action="${pageContext.request.contextPath}/UserServlet?method=login"
 				method="post" onsubmit="return checkForm()">
 				<p>
 					<label>用户名:</label> <input class="text-input" type="text"
@@ -63,7 +64,7 @@
 				<div class="clear"></div>
 				<p>
 					<label>密码:</label> <input class="text-input" type="password"
-						id="password" name="password" />
+						id="password" name="uPassword" />
 				</p>
 				<div class="clear"></div>
 				<a class="button" href="${pageContext.request.contextPath}/background/regist.jsp" >注册</a>

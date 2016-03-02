@@ -13,6 +13,7 @@ import cn.itcast.servlet.BaseServlet;
 
 import com.xawl.netdisk.catalog.domain.Catalog;
 import com.xawl.netdisk.catalog.service.CatalogService;
+import com.xawl.user.domain.User;
 
 public class CatalogServlet extends BaseServlet {
 	private CatalogService service = new CatalogService();
@@ -21,11 +22,9 @@ public class CatalogServlet extends BaseServlet {
 	
 	public String myCatalog(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-
-		String cid = request.getParameter("cid");
-		if (cid == null || cid.isEmpty()) {
-			cid = "1";
-		}
+		//先从session拿到user 然后获取对应的文件地址
+		User user=(User) request.getSession().getAttribute("user");
+		String cid = user.getcId();
 		Catalog c = service.findByCidToCatalog(cid);
 		request.setAttribute("catalog", c);
 		return "f:/home.jsp";
