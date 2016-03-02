@@ -30,10 +30,11 @@
 	<div class="span12">
 		<div>
 			<div class="headLeft">
+			logo
 				<img src="${pageContext.request.contextPath}/images/logo_back.png"/>
 			</div>
 			<div class="headRight">
-				欢迎管理员：<font color="red">${currentUser.userName }</font>&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascript:logout()">[&nbsp;安全退出&nbsp;]</a>&nbsp;&nbsp;&nbsp;&nbsp;<font id="today" class="currentDateTime"></font>
+				欢迎管理员：<font color="red">${sessionScope.user.userName }</font>&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascript:logout()">[&nbsp;安全退出&nbsp;]</a>&nbsp;&nbsp;&nbsp;&nbsp;<font id="today" class="currentDateTime"></font>
 			</div>
 		</div>
 	</div>

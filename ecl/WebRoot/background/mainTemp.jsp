@@ -18,7 +18,7 @@
 		mainPage="/background/default.jsp";
 	}
 %>
-<title>屌炸天新闻后台管理</title>
+<title>ECL实验室后台管理</title>
 <script type="text/javascript">
 	function refreshSystem(){
 		$.post("init",{},
@@ -42,19 +42,19 @@
 			<div class="newsMenu">
 				<ul class="nav nav-tabs nav-stacked">
 				  <li><a href="${pageContext.request.contextPath}/background/mainTemp.jsp"><strong>主页</strong></a></li>
-				  <li><a href="#"><strong>新闻管理</strong></a></li>
-				  <li><a href="${pageContext.request.contextPath}/news?action=preSave">&nbsp;&nbsp;新闻添加</a></li>
-				  <li><a href="${pageContext.request.contextPath}/news?action=backList">&nbsp;&nbsp;新闻维护</a></li>
-				  <li><a href=""><strong>新闻评论管理</strong></a></li>
-				  <li><a href="${pageContext.request.contextPath}/comment?action=backList">&nbsp;&nbsp;新闻评论维护</a></li>
-				  <li><a href=""><strong>新闻类别管理</strong></a></li>
-				  <li><a href="${pageContext.request.contextPath}/newsType?action=preSave">&nbsp;&nbsp;新闻类别添加</a></li>
-				  <li><a href="${pageContext.request.contextPath}/newsType?action=backList">&nbsp;&nbsp;新闻类别维护</a></li>
+				  <li><a href="#"><strong>首页信息管理</strong></a></li>
+				  <li><a href="${pageContext.request.contextPath}/news?action=preSave">&nbsp;&nbsp;信息添加</a></li>
+				  <li><a href="${pageContext.request.contextPath}/news?action=backList">&nbsp;&nbsp;信息维护</a></li>
+				    <li><a href="${pageContext.request.contextPath}/news?action=backList">&nbsp;&nbsp;图片维护</a></li>
+				  <li><a href=""><strong>网盘管理</strong></a></li>
+				  <li><a href="${pageContext.request.contextPath}/comment?action=backList">&nbsp;&nbsp;文件管理</a></li>
+				  <li><a href="${pageContext.request.contextPath}/newsType?action=preSave">&nbsp;&nbsp;用户管理</a></li>
 				  <li><a href=""><strong>友情连接管理</strong></a></li>
 				  <li><a href="${pageContext.request.contextPath}/link?action=preSave">&nbsp;&nbsp;友情连接添加</a></li>
 				  <li><a href="${pageContext.request.contextPath}/link?action=backList">&nbsp;&nbsp;友情连接维护</a></li>
 				  <li><a href=""><strong>系统管理</strong></a></li>
-				  <li><a href="javascript:refreshSystem()">&nbsp;&nbsp;刷新服务器缓存</a></li>
+				  <li><a href="">&nbsp;&nbsp;密码修改</a></li>
+				  <li><a href="">&nbsp;&nbsp;待定</a></li>
 				</ul>
 			</div>
 		</div>
