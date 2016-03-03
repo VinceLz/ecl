@@ -81,7 +81,7 @@
 					<!-- <li class="nav-item active"><a class="nav-link" href="#">主页<span
 					class="sr-only">(current)</span></a></li> -->
 					<li class="nav-item"><a class="nav-link"
-						href="<c:url value='/CatalogServlet?method=myCatalog' />">我的文件<span
+						href="<c:url value='/CatalogServlet?method=myCatalogRoot' />">我的文件<span
 							class="sr-only">(current)</span>
 					</a>
 					</li>

@@ -7,6 +7,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
+import org.junit.Test;
+
 import com.xawl.netdisk.file.domain.File;
 
 public class Tool {
@@ -65,7 +67,12 @@ public class Tool {
 		
 	}
 	public static String getCurrentTime(){
-		SimpleDateFormat dateFormat=new SimpleDateFormat("yyyy-mm-dd");
+		SimpleDateFormat dateFormat=new SimpleDateFormat("yyyy-MM-dd");
 		return dateFormat.format(new Date()).toString();
+	}
+	@Test
+	public void text() {
+		// TODO Auto-generated method stub
+		System.out.println(getCurrentTime());
 	}
 }

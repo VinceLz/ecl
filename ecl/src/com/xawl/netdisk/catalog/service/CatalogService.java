@@ -68,4 +68,12 @@ public class CatalogService {
 			throw new RuntimeException(e);
 		}
 	}
+	//删除所以文件
+	public void deleteAll(String cid){
+		try {
+			cDao.deleteAll(cid);
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+	}
 }

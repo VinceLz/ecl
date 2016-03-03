@@ -19,20 +19,7 @@
 	}
 %>
 <title>ECL实验室后台管理</title>
-<script type="text/javascript">
-	function refreshSystem(){
-		$.post("init",{},
-				function(flag){
-					var flag = eval('('+flag+')');
-					if(flag){
-						alert("系统刷新成功！");
-					}else{
-						alert("系统刷新失败！");
-					}
-				}
-			);
-	}
-</script>
+	
 </head>
 <body>
 <div class="container">
@@ -47,8 +34,8 @@
 				  <li><a href="${pageContext.request.contextPath}/news?action=backList">&nbsp;&nbsp;信息维护</a></li>
 				    <li><a href="${pageContext.request.contextPath}/news?action=backList">&nbsp;&nbsp;图片维护</a></li>
 				  <li><a href=""><strong>网盘管理</strong></a></li>
-				  <li><a href="${pageContext.request.contextPath}/comment?action=backList">&nbsp;&nbsp;文件管理</a></li>
-				  <li><a href="${pageContext.request.contextPath}/newsType?action=preSave">&nbsp;&nbsp;用户管理</a></li>
+				  <li><a href="${pageContext.request.contextPath}/UserServlet?method=file">&nbsp;&nbsp;文件管理</a></li>
+				  <li><a href="${pageContext.request.contextPath}/UserServlet?method=getUserList">&nbsp;&nbsp;用户管理</a></li>
 				  <li><a href=""><strong>友情连接管理</strong></a></li>
 				  <li><a href="${pageContext.request.contextPath}/link?action=preSave">&nbsp;&nbsp;友情连接添加</a></li>
 				  <li><a href="${pageContext.request.contextPath}/link?action=backList">&nbsp;&nbsp;友情连接维护</a></li>

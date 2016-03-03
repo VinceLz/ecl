@@ -25,15 +25,6 @@ public class CatalogDao {
 	private QueryRunner qr = new TxQueryRunner();
 	private FileDao fileDao = new FileDao();
 
-	public void close(){
-		try {
-			qr.getDataSource().getConnection().close();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-	
 	// 给我一个cid，就可以查找下面一级的目录和文件
 	public Catalog findByCidToCatalog(String cid) throws SQLException {
 		String sql = "select * from catalog where cId=?";
@@ -90,11 +81,11 @@ public class CatalogDao {
 		qr.update(sql, para);
 		return;
 	}
-	//create root
+
+	// create root
 	public void createRootCatalog(Catalog c) throws SQLException {
 		String sql = "insert into catalog (cId,cName,cDate,cF) values(?,?,?,?)";
-		Object[] para = {c.getcId(),c.getcName(),
-				c.getcDate(), c.getCf() };
+		Object[] para = { c.getcId(), c.getcName(), c.getcDate(), c.getCf() };
 		qr.update(sql, para);
 		return;
 	}
@@ -141,11 +132,97 @@ public class CatalogDao {
 		for (Catalog c : chileList) {
 			deleteByCatalog(c.getcId(), context);
 		}
-		
+
 		return;
 	}
 
-	public void testDelete() throws Exception {
-
+	// 通过cid 查找他的上下级
+	public Catalog findAllCatalog(String cid) throws SQLException {
+		String sql = "select * from catalog where cId=?";
+		// 打包为Map集合，封装子类
+		Map<String, Object> mapbean = qr.query(sql, new MapHandler(), cid);
+		Catalog cata = CommonUtils.toBean(mapbean, Catalog.class);
+		if (mapbean.get("pId") != null) {
+			// 说明他有上级
+			Catalog parent = findByCid((String) mapbean.get("pId"));
+			cata.setParent(parent);
+			// 查看是否有直接子类 有就封装
+			
+		} 
+		List<Catalog> child=chilList(cata.getcId());
+		cata.setChildren(child);
+		return cata;
 	}
+
+	// 根据用户名删除所有文件夹 文件信息
+	public void deleteAll(String root) throws SQLException {
+		List<Catalog> child=chilList(root);
+		//删除该目录的file文件
+		deleteFromCatalog(root);
+		//开始遍历递归
+		for(Catalog c:child){
+			deleteAll(c.getcId());
+		}
+		deleteFromCatalog1(root);
+	}
+
+	// 通过pid查询目录类
+	public List<Catalog> chilList(String pid) throws SQLException {
+		String sql = "select * from catalog where pId=?";
+		List<Map<String, Object>> map = qr
+				.query(sql, new MapListHandler(), pid);
+		List<Catalog> Catalog1 = new ArrayList<Catalog>();
+		Catalog c1 = null;
+		for (Map<String, Object> m : map) {
+			if (m.get("pId") != null) {
+				c1 = CommonUtils.toBean(m, Catalog.class);
+				Catalog c = this.findByCid((String) m.get("pId"));
+				c1.setParent(c);
+			}
+			Catalog1.add(c1);
+		}
+		return Catalog1;
+	}
+	//删除一个目录下的file
+	public void deleteFromCatalog(String cid) throws SQLException{
+		String sql="select cF from catalog where cId=?";
+		String cf = (String) qr.query(sql, new ScalarHandler(), cid);
+		//开始删除file文件
+		sql="select * from catalog_file where cf=?";
+		List<Map<String,Object>> map=qr.query(sql, new MapListHandler(),cf);
+		for(Map<String,Object> m:map){
+			String fid=(String) m.get("fid");
+			deleteFromFile(fid);
+		}
+		deleteFromCatalog_file(cf);
+	}
+	
+	
+	public void deleteFromFile(String fid) throws SQLException {
+			String sql="delete from file where fId=?";
+			qr.update(sql,fid);
+	}
+	public void deleteFromCatalog_file(String cf) throws SQLException {
+		String sql="delete from catalog_file where cf=?";
+		qr.update(sql,cf);
+}
+
+	//通过cid删除数据库的catalog目录
+	public void deleteFromCatalog1(String cid) throws SQLException{
+		String sql="delete from catalog where cId=?";
+		qr.update(sql,cid);
+	}
+	
+	@Test
+	public void Text() throws SQLException{
+//		Catalog c=findAllCatalog("5QR6");
+//		for(Catalog x:c.getChildren()){
+//			System.out.println(x);
+//		}
+		deleteAll("vVEQ");
+	}
+	
+	
+	
+	
 }

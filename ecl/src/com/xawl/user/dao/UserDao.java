@@ -1,9 +1,12 @@
 package com.xawl.user.dao;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanHandler;
+import org.apache.commons.dbutils.handlers.BeanListHandler;
+import org.apache.commons.dbutils.handlers.MapHandler;
 
 import cn.itcast.jdbc.TxQueryRunner;
 
@@ -48,8 +51,8 @@ public class UserDao {
 	 */
 	public void addUser(User user) {
 		try {
-			String sql = "insert into  user (username,upassword,cid,utime,role) values(?,?,?,?,?)";
-			Object[] params = {user.getUserName(),
+			String sql = "insert into  user (uId,userName,uPassword,cId,uTime,role) values(?,?,?,?,?,?)";
+			Object[] params = {user.getuId(),user.getUserName(),
 					user.getuPassword(), user.getcId(),user.getuTime(),user.getRole() };
 			qr.update(sql, params);
 		} catch (SQLException e) {
@@ -72,5 +75,23 @@ public class UserDao {
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}
+	}
+	/*
+	 * 返回所有普通会员
+	 */
+	public List<User> getUserList() throws SQLException{
+		String sql="select * from user";
+		return qr.query(sql, new BeanListHandler<User>(User.class));
+	}
+
+	//删除一个用户
+	public Boolean deleteUser(String uid) throws SQLException {
+		String sql="delete from user where uId=?";
+		return qr.update(sql,uid)==1; 
+	}
+	///=查找uid----cid
+	public String findUserToCid(String uid) throws SQLException {
+		String sql="select * from user where uId=?";
+		return (String)qr.query(sql, new MapHandler(),uid).get("cId");
 	}
 }

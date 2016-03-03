@@ -26,8 +26,8 @@ public class Catalog {
 	@Override
 	public String toString() {
 		return "Catalog [cId=" + cId + ", cName=" + cName + ", cDate=" + cDate
-				+ ", parent=" + parent + ", isShare=" + isShare + ", children="
-				+ children + ", myFile=" + myFile + "]";
+				+ ", parent=" + parent + ", cf=" + cf + ", isShare=" + isShare
+				+ ", children=" + children + ", myFile=" + myFile + "]";
 	}
 
 	public String getIsShare() {
